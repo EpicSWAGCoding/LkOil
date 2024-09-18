@@ -1,11 +1,12 @@
-import {Container} from "@/components/shared";
+import { Container, Header } from "@/components/shared";
 
-export default function Home() {
-  return (
-    <div>
-        <Container>
-            <h1>Здравствуйте, Константин Константинович!</h1>
-        </Container>
-    </div>
-  );
+export default async function Home() {
+    return (
+        <div>
+            <Container>
+                <Header />
+                <h1>Здравствуйте</h1>
+            </Container>
+        </div>
+    );
 }

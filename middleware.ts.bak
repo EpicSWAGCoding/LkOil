@@ -1,0 +1,26 @@
+import { NextResponse } from 'next/server';
+import { getToken } from 'next-auth/jwt'; // Или используйте вашу логику проверки сессии
+
+export async function middleware(request) {
+    const token = request.cookies.get('userId'); // Или используйте JWT / другую логику
+    const { pathname } = request.nextUrl;
+
+    // Если пользователь не авторизован и пытается зайти на защищенные страницы
+    if (!token && pathname.startsWith('/')) {
+        // Перенаправляем на страницу авторизации
+        return NextResponse.redirect(new URL('/auth', request.url));
+    }
+
+    // Если пользователь авторизован, но заходит на страницу авторизации, можно перенаправить его в профиль
+    if (token && pathname.startsWith('/auth')) {
+        return NextResponse.redirect(new URL('/', request.url)); // Пример: перенаправление в личный кабинет
+    }
+
+    // Продолжить запрос, если авторизация корректна илЧи страница не защищена
+    return NextResponse.next();
+}
+
+// Указываем, на какие маршруты распространяется middleware
+export const config = {
+    matcher: ['/root/:path*', '/auth/:path*'],
+};

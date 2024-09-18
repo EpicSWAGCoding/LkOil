@@ -1,1 +1,0 @@
-export { menuName } from './menu'

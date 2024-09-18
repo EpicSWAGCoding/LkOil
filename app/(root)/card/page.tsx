@@ -1,8 +1,9 @@
-import { Container } from "@/components/shared";
+import { Container, Header } from "@/components/shared";
 
-export default function CardPage() {
+export default async function CardPage() {
     return (
         <Container>
+            <Header />
             <div>Это страница карт</div>
         </Container>
     )

@@ -1,8 +1,9 @@
-import { Container } from "@/components/shared";
+import { Container, Header } from "@/components/shared";
 
-export default function BillingPage() {
+export default async function BillingPage() {
     return (
         <Container>
+            <Header />
             <div>Это страница Счетов</div>
         </Container>
     )

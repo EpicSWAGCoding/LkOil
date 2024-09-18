@@ -1,8 +1,9 @@
-import { Container } from "@/components/shared";
+import { Container, Header } from "@/components/shared";
 
-export default function RefillPage() {
+export default async function RefillPage() {
     return (
         <Container>
+            <Header />
             <div>Это страница пополнений</div>
         </Container>
     )

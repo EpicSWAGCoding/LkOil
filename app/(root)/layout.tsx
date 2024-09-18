@@ -1,6 +1,6 @@
 import { Nunito } from 'next/font/google';
 
-import { Header } from "@/components/shared/Header";
+import { MainHeader } from "@/components/shared";
 
 const nunito = Nunito({
     subsets: ['cyrillic'],
@@ -11,8 +11,8 @@ const nunito = Nunito({
 export default function RootLayout({ children, }: Readonly <{ children: React.ReactNode; }>) {
     return (
         <body className={nunito.className}>
-        <Header />
-        {children}
+            <MainHeader />
+            {children}
         </body>
     );
 }
