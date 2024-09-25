@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useEffect, FC } from 'react';
 import { Container } from "@/components/shared";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
