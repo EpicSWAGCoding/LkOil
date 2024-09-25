@@ -1,70 +1,68 @@
-'use client'
-
-import { useState, useEffect, FC } from 'react'
-import { Container } from "@/components/shared"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { useSelectStore } from "@/store/category"
-import { Loader } from "./Loader"
+import { useState, useEffect, FC } from 'react';
+import { Container } from "@/components/shared";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { useSelectStore } from "@/store/category";
+import { Loader } from "./Loader";
 
 interface Account {
-    id: number
-    accountNumber: string
-    balance: number
-    currencyType: string
-    accountType: string
-    isBlocked: boolean
-    validTo: string
-    segment?: string
-    contract?: string
+    id: number;
+    accountNumber: string;
+    balance: number;
+    currencyType: string;
+    accountType: string;
+    isBlocked: boolean;
+    validTo: string;
+    segment?: string;
+    contract?: string;
 }
 
 export const Billing: FC = () => {
-    const { selectedOptions } = useSelectStore()
-    const [selectedAccount, setSelectedAccount] = useState<Account | null>(null)
-    const [isAdmin, setIsAdmin] = useState(false)
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState<string | null>(null)
+    const { selectedOptions } = useSelectStore();
+    const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-    const formatCurrency = (amount, currencyType) => {
+    // Указываем типы параметров
+    const formatCurrency = (amount: number, currencyType: string): string => {
         return new Intl.NumberFormat('ru-RU', {
             style: 'currency',
             currency: currencyType,
         }).format(amount);
     };
 
-
     const fetchAccountData = async (accountId: string) => {
-        setLoading(true)
-        setError(null)
+        setLoading(true);
+        setError(null);
 
         try {
-            const response = await fetch(`/api/accounts?accountId=${accountId}`)
+            const response = await fetch(`/api/accounts?accountId=${accountId}`);
             if (!response.ok) {
-                throw new Error('Ошибка загрузки данных')
+                throw new Error('Ошибка загрузки данных');
             }
 
-            const data = await response.json()
-            setSelectedAccount(data)
+            const data = await response.json();
+            setSelectedAccount(data);
         } catch (err) {
-            setError(err.message || 'Ошибка при загрузке данных')
+            setError(err.message || 'Ошибка при загрузке данных');
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
-    }
+    };
 
     useEffect(() => {
         if (selectedOptions.account) {
-            fetchAccountData(selectedOptions.account)
+            fetchAccountData(selectedOptions.account);
         } else {
-            setSelectedAccount(null)
+            setSelectedAccount(null);
         }
-    }, [selectedOptions.account])
+    }, [selectedOptions.account]);
 
     useEffect(() => {
-        setIsAdmin(false)
-    }, [])
+        setIsAdmin(false);
+    }, []);
 
     return (
         <Container>
@@ -130,7 +128,7 @@ export const Billing: FC = () => {
                                 <div>
                                     <Label>Остаток</Label>
                                     <Input
-                                        value={`${formatCurrency(selectedAccount.balance, selectedAccount.currencyType)}`}
+                                        value={formatCurrency(selectedAccount.balance, selectedAccount.currencyType)}
                                         readOnly={!isAdmin}
                                         className="font-bold text-lg"
                                     />
@@ -145,5 +143,5 @@ export const Billing: FC = () => {
                 )}
             </div>
         </Container>
-    )
-}
+    );
+};
