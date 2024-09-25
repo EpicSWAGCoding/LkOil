@@ -80,9 +80,7 @@ export const CardWithForm: FC<Props> = () => {
                             value={cardNumber}
                             onChange={(e) => setCardNumber(e.target.value)}
                         >
-                            {(inputProps: React.InputHTMLAttributes<HTMLInputElement>) => (
-                                <Input {...inputProps} id="cardNumber" className="mt-1" placeholder="0000 0000 0000 0000" />
-                            )}
+                            <Input id="cardNumber" className="mt-1" placeholder="0000 0000 0000 0000" />
                         </InputMask>
                     </div>
 
@@ -120,9 +118,7 @@ export const CardWithForm: FC<Props> = () => {
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
                         >
-                            {(inputProps: React.InputHTMLAttributes<HTMLInputElement>) => (
-                                <Input {...inputProps} id="phoneNumber" className="mt-1" placeholder="+7 (000) 000-00-00" />
-                            )}
+                            <Input id="phoneNumber" className="mt-1" placeholder="+7 (000) 000-00-00" />
                         </InputMask>
                     </div>
 
