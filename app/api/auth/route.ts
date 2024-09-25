@@ -8,7 +8,7 @@ import { verify } from 'jsonwebtoken';
 // Секретный ключ для подписи JWT. Храните это в безопасном месте, например, в переменных окружения.
 const JWT_SECRET = process.env.JWT_SECRET;
 
-export async function verifyJwtToken(token: string) {
+async function verifyJwtToken(token: string) { // Удалите export
     try {
         const decoded = verify(token, JWT_SECRET);
         if (typeof decoded === 'string') {
