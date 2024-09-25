@@ -44,7 +44,7 @@ export const CardWithForm: FC<Props> = () => {
                 setError(data.message || 'Ошибка авторизации');
             }
 
-        } catch (error) {
+        } catch (error: any) {
             console.error('Ошибка при авторизации:', error);
             setError('Ошибка подключения к серверу: ' + error.message);
         } finally {
