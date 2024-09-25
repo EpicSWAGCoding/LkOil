@@ -64,6 +64,11 @@ export async function POST(request: Request) {
 
         console.log('Шифруем payload', encryptedPayload);
 
+        // Проверяем наличие JWT_SECRET перед использованием
+        if (!JWT_SECRET) {
+            throw new Error('JWT_SECRET is not defined');
+        }
+
         // Создаем JWT
         const token = sign({ data: encryptedPayload }, JWT_SECRET, { expiresIn: '1h' });
 
