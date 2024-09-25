@@ -8,12 +8,17 @@ import { verify } from 'jsonwebtoken';
 // Секретный ключ для подписи JWT. Храните это в безопасном месте, например, в переменных окружения.
 const JWT_SECRET = process.env.JWT_SECRET;
 
-async function verifyJwtToken(token: string) { // Удалите export
+async function verifyJwtToken(token: string) {
     try {
-        const decoded = verify(token, JWT_SECRET);
+        if (!JWT_SECRET) {
+            throw new Error('JWT_SECRET is not defined');
+        }
+
+        const decoded = verify(token, JWT_SECRET); // Здесь мы уверены, что JWT_SECRET определен
         if (typeof decoded === 'string') {
             throw new Error('Invalid token');
         }
+
         const decryptedPayload = decrypt(decoded.data);
         return JSON.parse(decryptedPayload);
     } catch (error) {
@@ -21,6 +26,7 @@ async function verifyJwtToken(token: string) { // Удалите export
         return null;
     }
 }
+
 
 export async function POST(request: Request) {
     const { login, password } = await request.json();
