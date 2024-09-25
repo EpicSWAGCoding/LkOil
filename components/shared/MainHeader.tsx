@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { FC, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -7,8 +7,8 @@ import Image from "next/image";
 import { Avatar, AvatarFallback, Button } from "@/components/ui";
 import Link from "next/link";
 import { toast } from "@/hooks/use-toast";
-import { router } from "next";
 import { Mail, MapPin, PhoneCall } from "lucide-react";
+import { useRouter } from "next/router"; // Измененный импорт
 
 interface Props {
     className?: string;
@@ -16,6 +16,7 @@ interface Props {
 
 export const MainHeader: FC<Props> = ({ className }) => {
     const [username, setUsername] = useState<string | null>(null);
+    const router = useRouter(); // Инициализация useRouter
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -34,7 +35,7 @@ export const MainHeader: FC<Props> = ({ className }) => {
                 method: 'POST',
             });
             if (response.ok) {
-                router.push('/auth');
+                router.push('/auth'); // Используйте router для навигации
                 toast({
                     title: "Выход",
                     description: "Вы успешно вышли из системы",
