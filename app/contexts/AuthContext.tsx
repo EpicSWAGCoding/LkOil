@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface AuthContextType {
     isLoggedIn: boolean;
-    login: () => void;
+    login: (token: string) => void;  // Обновлено: теперь login принимает аргумент
     logout: () => void;
 }
 
