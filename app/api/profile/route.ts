@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/prisma/prisma-client";
-import { verifyJwtToken } from "@/app/api/auth/route";
+import { verifyJwtToken } from "@/lib/jwt";
 
 export async function GET(req: NextRequest) {
     try {
