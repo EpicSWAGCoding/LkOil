@@ -1,10 +1,16 @@
+// app/api/auth/route.ts
 import { prisma } from "@/prisma/prisma-client";
 import { NextResponse } from "next/server";
 import { sign } from 'jsonwebtoken';
 import { compare } from 'bcrypt';
 import { encrypt } from '@/lib/encryption';
 
+// Получение секретного ключа из переменных окружения
 const JWT_SECRET = process.env.JWT_SECRET;
+
+if (!JWT_SECRET) {
+    throw new Error('JWT_SECRET is not defined');
+}
 
 export async function POST(request: Request) {
     const { login, password } = await request.json();
