@@ -6,7 +6,7 @@ import { compare } from 'bcrypt';
 import { encrypt } from '@/lib/encryption';
 
 // Получение секретного ключа из переменных окружения
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = '3d7c4e0f1a2b5d8e9f6c3b7a0d2e5f8c1b4a7d0e3f6c9b2a5d8e1f4a7c0b3d6';
 
 if (!JWT_SECRET) {
     throw new Error('JWT_SECRET is not defined');
