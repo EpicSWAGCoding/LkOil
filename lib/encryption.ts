@@ -13,10 +13,19 @@ export function encrypt(text: string) {
 
 export function decrypt(text: string) {
     const textParts = text.split(':');
-    const iv = Buffer.from(textParts.shift(), 'hex');
+
+    // Ensure that the first part is defined
+    const ivPart = textParts.shift();
+    if (!ivPart) {
+        throw new Error("Invalid encrypted text format: IV is missing.");
+    }
+
+    const iv = Buffer.from(ivPart, 'hex');
     const encryptedText = Buffer.from(textParts.join(':'), 'hex');
-    const decipher = createDecipheriv('aes-256-cbc', Buffer.from(ENCRYPTION_KEY), iv);
+    const decipher = createDecipheriv('aes-256-cbc', Buffer.from(ENCRYPTION_KEY!), iv);
+
     let decrypted = decipher.update(encryptedText);
     decrypted = Buffer.concat([decrypted, decipher.final()]);
+
     return decrypted.toString();
 }
