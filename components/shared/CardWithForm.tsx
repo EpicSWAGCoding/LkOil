@@ -1,9 +1,8 @@
-'use client';
+'use client'
 
-import * as React from "react";
+import InputMask from "react-input-mask";
 import { Button, Input, Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui";
 import { FC, useState } from "react";
-import InputMask, { Props as InputMaskProps } from "react-input-mask";
 import { useRouter } from 'next/navigation';
 
 interface Props {
@@ -16,16 +15,16 @@ export const CardWithForm: FC<Props> = () => {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const [phoneNumber, setPhoneNumber] = useState('')
-    const [isSmsSent, setIsSmsSent] = useState(false)
-    const [smsCode, setSmsCode] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [isSmsSent, setIsSmsSent] = useState(false);
+    const [smsCode, setSmsCode] = useState('');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
 
-        // Remove spaces from card number
+        // Убираем пробелы из номера карты
         const cleanCardNumber = cardNumber.replace(/\s/g, '');
 
         try {
@@ -81,7 +80,7 @@ export const CardWithForm: FC<Props> = () => {
                             value={cardNumber}
                             onChange={(e) => setCardNumber(e.target.value)}
                         >
-                            {(inputProps: InputMaskProps) => (
+                            {(inputProps: React.InputHTMLAttributes<HTMLInputElement>) => (
                                 <Input {...inputProps} id="cardNumber" className="mt-1" placeholder="0000 0000 0000 0000" />
                             )}
                         </InputMask>
@@ -121,7 +120,7 @@ export const CardWithForm: FC<Props> = () => {
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
                         >
-                            {(inputProps: InputMaskProps) => (
+                            {(inputProps: React.InputHTMLAttributes<HTMLInputElement>) => (
                                 <Input {...inputProps} id="phoneNumber" className="mt-1" placeholder="+7 (000) 000-00-00" />
                             )}
                         </InputMask>
