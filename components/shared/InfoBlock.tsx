@@ -10,7 +10,7 @@ interface Props {
     title: string;
     text: string;
     className?: string;
-    imageUrl?: string;
+    imageUrl?: string; // imageUrl может быть undefined
 }
 
 export const InfoBlock: React.FC<Props> = ({ className, title, text, imageUrl }) => {
@@ -32,7 +32,13 @@ export const InfoBlock: React.FC<Props> = ({ className, title, text, imageUrl })
                 </div>
             </div>
 
-            <Image src={imageUrl} alt={title} width={300} />
+            {imageUrl ? ( // Проверяем, есть ли imageUrl
+                <Image src={imageUrl} alt={title} width={300} height={200} /> // Добавьте height, чтобы избежать ошибок
+            ) : (
+                <div className="w-[300px] h-[200px] bg-gray-200 flex items-center justify-center"> {/* Заглушка для отсутствующего изображения */}
+                    Нет изображения
+                </div>
+            )}
         </div>
     );
 };
