@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import {
     Card,
     CardContent,
@@ -12,39 +12,55 @@ import {
     TableHead,
     TableHeader,
     TableRow
-} from "@/components/ui"
-import { BarChart, Wallet, CreditCard } from 'lucide-react'
+} from "@/components/ui";
+import { BarChart, Wallet, CreditCard } from 'lucide-react';
 import { MainPagesLoader } from "@/components/shared/MainPagesLoader";
 
+// Интерфейсы для данных
+interface Transaction {
+    id: string; // Или number, в зависимости от вашего API
+    transactionDate: string;
+    cardNumber: string;
+    gasStation: string;
+    total: number;
+}
+
+interface MainData {
+    balance: number;
+    activeCards: number;
+    transactionsCount: number;
+    recentTransactions: Transaction[];
+}
+
 // Создание API запросов
-const fetchMainData = async () => {
-    const res = await fetch('/api/main')
-    return await res.json()
+const fetchMainData = async (): Promise<MainData> => {
+    const res = await fetch('/api/main');
+    return await res.json();
 }
 
 export const MainPages = () => {
-    const [data, setData] = useState({
+    const [data, setData] = useState<MainData>({
         balance: 0,
         activeCards: 0,
         transactionsCount: 0,
         recentTransactions: []
-    })
-    const [isLoading, setIsLoading] = useState(true)
+    });
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         fetchMainData()
             .then((fetchedData) => {
-                setData(fetchedData)
-                setIsLoading(false)
+                setData(fetchedData);
+                setIsLoading(false);
             })
             .catch((error) => {
-                console.error("Error fetching data:", error)
-                setIsLoading(false)
-            })
-    }, [])
+                console.error("Error fetching data:", error);
+                setIsLoading(false);
+            });
+    }, []);
 
     if (isLoading) {
-        return <MainPagesLoader />
+        return <MainPagesLoader />;
     }
 
     return (
@@ -107,5 +123,5 @@ export const MainPages = () => {
                 </CardContent>
             </Card>
         </div>
-    )
+    );
 }
