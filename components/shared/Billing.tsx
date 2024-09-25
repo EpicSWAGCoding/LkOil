@@ -47,12 +47,17 @@ export const Billing: FC = () => {
 
             const data = await response.json();
             setSelectedAccount(data);
-        } catch (err) {
-            setError(err.message || 'Ошибка при загрузке данных');
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setError(err.message || 'Ошибка при загрузке данных');
+            } else {
+                setError('Ошибка при загрузке данных');
+            }
         } finally {
             setLoading(false);
         }
     };
+
 
     useEffect(() => {
         if (selectedOptions.account) {
