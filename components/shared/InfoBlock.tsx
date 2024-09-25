@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { cn } from "@/lib/utils";
 import { Button } from "../ui";
 import { Title } from "@/components/shared";
+import Image from 'next/image';
 
 interface Props {
     title: string;
@@ -31,7 +32,7 @@ export const InfoBlock: React.FC<Props> = ({ className, title, text, imageUrl })
                 </div>
             </div>
 
-            <img src={imageUrl} alt={title} width={300} />
+            <Image src={imageUrl} alt={title} width={300} />
         </div>
     );
 };

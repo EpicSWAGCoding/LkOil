@@ -1,6 +1,6 @@
 import { Container, Header, MainPages } from '@/components/shared';
 
-export default async function Home({ req }: { req: any }) {
+export default async function Home() {
 
     return (
         <div>

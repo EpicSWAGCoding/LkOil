@@ -5,20 +5,17 @@ import { Button, Input, Tabs, TabsContent, TabsList, TabsTrigger } from "@/compo
 import { FC, useState } from "react";
 import InputMask from "react-input-mask";
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/app/contexts/AuthContext';
 
 interface Props {
     className?: string;
 }
 
-export const CardWithForm: FC<Props> = ({ className }) => {
+export const CardWithForm: FC<Props> = () => {
     const [cardNumber, setCardNumber] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const { login: authLogin } = useAuth();
-
     const [phoneNumber, setPhoneNumber] = useState('')
     const [isSmsSent, setIsSmsSent] = useState(false)
     const [smsCode, setSmsCode] = useState('')
@@ -84,7 +81,7 @@ export const CardWithForm: FC<Props> = ({ className }) => {
                             value={cardNumber}
                             onChange={(e) => setCardNumber(e.target.value)}
                         >
-                            {(inputProps: any) => (
+                            {(inputProps) => (
                                 <Input {...inputProps} id="cardNumber" className="mt-1" placeholder="0000 0000 0000 0000" />
                             )}
                         </InputMask>
@@ -124,7 +121,7 @@ export const CardWithForm: FC<Props> = ({ className }) => {
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
                         >
-                            {(inputProps: any) => (
+                            {(inputProps) => (
                                 <Input {...inputProps} id="phoneNumber" className="mt-1" placeholder="+7 (000) 000-00-00" />
                             )}
                         </InputMask>
