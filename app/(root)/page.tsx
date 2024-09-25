@@ -1,11 +1,12 @@
-import { Container, Header } from "@/components/shared";
+import { Container, Header, MainPages } from '@/components/shared';
 
-export default async function Home() {
+export default async function Home({ req }: { req: any }) {
+
     return (
         <div>
             <Container>
                 <Header />
-                <h1>Здравствуйте</h1>
+                <MainPages />
             </Container>
         </div>
     );
