@@ -1,7 +1,6 @@
-// Удалите эту строку, если не используете NextResponse
-// import { NextResponse } from "next/server";
+import { NextResponse } from "next/server"; // Импортируйте, если используете
 
-export function setCookie(response, name, value, options = {}) {
+export function setCookie(response: NextResponse, name: string, value: string, options: Record<string, unknown> = {}) {
     response.cookies.set(name, value, {
         path: '/',
         httpOnly: true,
