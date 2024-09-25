@@ -1,6 +1,6 @@
 import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
 
-const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY; // Должен быть 32 байта для aes-256-cbc
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || '0123456789abcdef0123456789abcdef';
 const IV_LENGTH = 16; // Для AES, это всегда 16
 
 export function encrypt(text: string) {
