@@ -12,6 +12,7 @@ interface SelectStore {
     setContractor: (contractor: string) => void;
     setAccount: (account: string) => void;
     setCard: (card: string) => void;
+    clearSelections: () => void; // Добавьте этот метод
 }
 
 export const useSelectStore = create(
