@@ -13,9 +13,11 @@ if (!JWT_SECRET) {
 }
 
 export async function POST(request: Request) {
+    // Извлекаем login и password из запроса
     const { login, password } = await request.json();
 
     try {
+        // Пытаемся найти пользователя по номеру карты
         const user = await prisma.user.findUnique({
             where: { login },
         });
@@ -24,6 +26,7 @@ export async function POST(request: Request) {
             return NextResponse.json({ success: false, message: 'Неверный номер карты или пароль' }, { status: 401 });
         }
 
+        // Сравниваем пароли
         const isPasswordValid = await compare(password, user.password);
 
         if (!isPasswordValid) {
@@ -55,6 +58,7 @@ export async function POST(request: Request) {
 
         return response;
     } catch (error) {
+        // Обрабатываем ошибки, включая ошибки Next.js
         console.error('Ошибка при авторизации:', error);
         return NextResponse.json({ success: false, message: 'Внутренняя ошибка сервера' }, { status: 500 });
     }
