@@ -5,8 +5,6 @@ import { sign } from 'jsonwebtoken';
 import { compare } from 'bcrypt';
 import { encrypt } from '@/lib/encryption';
 
-export const dynamic = 'force-dynamic';
-
 // Получение секретного ключа из переменных окружения
 const JWT_SECRET = '3d7c4e0f1a2b5d8e9f6c3b7a0d2e5f8c1b4a7d0e3f6c9b2a5d8e1f4a7c0b3d6';
 
