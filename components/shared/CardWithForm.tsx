@@ -80,15 +80,11 @@ export const CardWithForm: FC<Props> = () => {
                             value={cardNumber}
                             onChange={(e) => setCardNumber(e.target.value)}
                         >
-                            {({ ref, ...inputProps }) => (
-                                <Input
-                                    id="cardNumber"
-                                    className="mt-1"
-                                    placeholder="0000 0000 0000 0000"
-                                    ref={ref}
-                                    {...inputProps} // Spread the inputProps to apply mask behavior
-                                />
-                            )}
+                            <Input
+                                id="cardNumber"
+                                className="mt-1"
+                                placeholder="0000 0000 0000 0000"
+                            />
                         </InputMask>
                     </div>
 
@@ -126,7 +122,11 @@ export const CardWithForm: FC<Props> = () => {
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
                         >
-                            <Input id="phoneNumber" className="mt-1" placeholder="+7 (000) 000-00-00" />
+                            <Input
+                                id="phoneNumber"
+                                className="mt-1"
+                                placeholder="+7 (000) 000-00-00"
+                            />
                         </InputMask>
                     </div>
 
