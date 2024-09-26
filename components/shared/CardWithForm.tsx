@@ -1,6 +1,5 @@
 'use client'
 
-import InputMask from "react-input-mask";
 import { Button, Input, Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui";
 import { FC, useState } from "react";
 import { useRouter } from 'next/navigation';
@@ -18,6 +17,16 @@ export const CardWithForm: FC<Props> = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [isSmsSent, setIsSmsSent] = useState(false);
     const [smsCode, setSmsCode] = useState('');
+
+    const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+
+        // Убираем пробелы и форматируем номер карты
+        const cleanValue = value.replace(/\D/g, '').slice(0, 16); // только цифры, не более 16
+        const formattedValue = cleanValue.replace(/(.{4})/g, '$1 ').trim(); // добавляем пробелы
+
+        setCardNumber(formattedValue);
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -51,6 +60,14 @@ export const CardWithForm: FC<Props> = () => {
         }
     };
 
+    const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+
+        // Убираем все символы кроме цифр и "+"
+        const cleanValue = value.replace(/[^+\d]/g, '').slice(0, 16);
+        setPhoneNumber(cleanValue);
+    };
+
     const handlePhoneSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!isSmsSent) {
@@ -74,18 +91,13 @@ export const CardWithForm: FC<Props> = () => {
                         <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-700">
                             Номер топливной карты
                         </label>
-                        <InputMask
-                            mask="9999 9999 9999 9999"
-                            maskChar=""
+                        <Input
+                            id="cardNumber"
+                            className="mt-1"
+                            placeholder="0000 0000 0000 0000"
                             value={cardNumber}
-                            onChange={(e) => setCardNumber(e.target.value)}
-                        >
-                            <Input
-                                id="cardNumber"
-                                className="mt-1"
-                                placeholder="0000 0000 0000 0000"
-                            />
-                        </InputMask>
+                            onChange={handleCardNumberChange}
+                        />
                     </div>
 
                     <div>
@@ -116,18 +128,13 @@ export const CardWithForm: FC<Props> = () => {
                         <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">
                             Номер телефона
                         </label>
-                        <InputMask
-                            mask="+7 (999) 999-99-99"
-                            maskChar=""
+                        <Input
+                            id="phoneNumber"
+                            className="mt-1"
+                            placeholder="+7 (000) 000-00-00"
                             value={phoneNumber}
-                            onChange={(e) => setPhoneNumber(e.target.value)}
-                        >
-                            <Input
-                                id="phoneNumber"
-                                className="mt-1"
-                                placeholder="+7 (000) 000-00-00"
-                            />
-                        </InputMask>
+                            onChange={handlePhoneChange}
+                        />
                     </div>
 
                     {isSmsSent && (
