@@ -1,9 +1,9 @@
-import { NextResponse } from 'next/server'
+// app/api/account/route.ts
+import { NextResponse } from 'next/server';
 import { prisma } from "@/prisma/prisma-client";
 
-export const dynamic = 'force-dynamic';
-
 export async function GET(request: Request) {
+    // Извлекаем searchParams из URL
     const { searchParams } = new URL(request.url);
     const accountId = searchParams.get('accountId');
 
@@ -13,6 +13,7 @@ export async function GET(request: Request) {
     }
 
     try {
+        // Пытаемся найти аккаунт по ID
         const account = await prisma.account.findUnique({
             where: {
                 id: parseInt(accountId),
@@ -25,6 +26,7 @@ export async function GET(request: Request) {
 
         return NextResponse.json(account);
     } catch (error) {
+        // Обрабатываем ошибки
         console.error('Error fetching account:', error);
         return NextResponse.json({ error: 'Failed to fetch account' }, { status: 500 });
     }

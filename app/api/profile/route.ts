@@ -1,3 +1,4 @@
+// app/api/profile/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/prisma/prisma-client";
 import { verifyJwtToken } from "@/lib/jwt";
@@ -32,7 +33,7 @@ export async function GET(req: NextRequest) {
         const contractor = user.contractorBindings[0]?.contractor;
 
         const profileData = {
-            username: user.username, // Добавляем username
+            username: user.username,
             name: contractor?.name || '',
             inn: contractor?.inn || '',
             kpp: '',
@@ -44,7 +45,7 @@ export async function GET(req: NextRequest) {
 
         return NextResponse.json({ profile: profileData, isAdmin: user.isAdmin });
     } catch (error) {
-        console.error('Error fetching profile:', error);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+        console.error('Ошибка при получении профиля:', error);
+        return NextResponse.json({ error: 'Не удалось получить профиль' }, { status: 500 });
     }
 }
