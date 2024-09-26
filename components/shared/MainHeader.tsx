@@ -8,7 +8,7 @@ import { Avatar, AvatarFallback, Button } from "@/components/ui";
 import Link from "next/link";
 import { toast } from "@/hooks/use-toast";
 import { Mail, MapPin, PhoneCall } from "lucide-react";
-import { useRouter } from "next/router"; // Измененный импорт
+import { useRouter } from "next/navigation";
 
 interface Props {
     className?: string;

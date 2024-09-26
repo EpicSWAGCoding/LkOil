@@ -80,7 +80,9 @@ export const CardWithForm: FC<Props> = () => {
                             value={cardNumber}
                             onChange={(e) => setCardNumber(e.target.value)}
                         >
-                            <Input id="cardNumber" className="mt-1" placeholder="0000 0000 0000 0000" />
+                            {() => (
+                                <Input id="cardNumber" className="mt-1" placeholder="0000 0000 0000 0000" />
+                            )}
                         </InputMask>
                     </div>
 

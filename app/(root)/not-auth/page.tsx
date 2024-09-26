@@ -8,7 +8,7 @@ export default function UnauthorizedPage() {
             <InfoBlock
                 title="Доступ запрещён"
                 text="Данную страницу могут просматривать только авторизованные пользователи"
-                imageUrl="lock.png"
+                imageUrl="/lock.png"
             />
         </div>
     );
