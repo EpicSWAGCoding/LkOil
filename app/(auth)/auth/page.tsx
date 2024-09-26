@@ -1,3 +1,5 @@
+'use client'
+
 import { Auth } from "@/components/shared";
 
 export default function AuthPage() {

@@ -1,3 +1,5 @@
+'use client'
+
 import React, { FC } from "react"; // Исправлено: импортируйте FC как именованный импорт
 import { cn } from "@/lib/utils";
 import Image from "next/image";
