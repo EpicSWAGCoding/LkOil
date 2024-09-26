@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { prisma } from "@/prisma/prisma-client";
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
     // Получение баланса, активных карт и транзакций из базы данных
     const balance = await prisma.balance.aggregate({
