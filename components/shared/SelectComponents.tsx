@@ -98,7 +98,7 @@ export const SelectComponents = () => {
 
             <Select
                 onValueChange={setCard as any}
-                value={selectedOptions.card || ""}
+                value={selectedOptions.card as any || ""}
                 disabled={!selectedOptions.contractor || !selectedOptions.account}
             >
                 <SelectTrigger className="w-[165px] h-9">
