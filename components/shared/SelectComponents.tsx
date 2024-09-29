@@ -78,19 +78,22 @@ export const SelectComponents = () => {
             </Select>
 
             <Select
-                onValueChange={setAccount}
-                value={selectedOptions.account || ""}
-                disabled={!selectedOptions.contractor}
+                onValueChange={(value) => setCard(value)} // Убедитесь, что сюда передается ID карты как строка
+                value={selectedOptions.card || ""}
+                disabled={!selectedOptions.contractor || !selectedOptions.account}
             >
                 <SelectTrigger className="w-[165px] h-9">
-                    <SelectValue placeholder="Выбор счета" />
+                    <SelectValue placeholder="Выбор карт" />
                 </SelectTrigger>
                 <SelectContent>
-                    {selectData?.accounts
-                        .filter(account => account.contractorId.toString() === selectedOptions.contractor)
-                        .map(account => (
-                            <SelectItem key={account.id} value={account.id.toString()}>
-                                {account.accountNumber}
+                    {selectData?.cards
+                        .filter(card =>
+                            card.contractorId.toString() === selectedOptions.contractor &&
+                            card.accountNumber === selectData.accounts.find(a => a.id.toString() === selectedOptions.account)?.accountNumber
+                        )
+                        .map(card => (
+                            <SelectItem key={card.id} value={card.id.toString()}>
+                                {card.cardNumber}
                             </SelectItem>
                         ))}
                 </SelectContent>
