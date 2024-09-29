@@ -17,11 +17,15 @@ import {useSelectStore} from "@/store/category";
 
 interface Transaction {
     id: number;
-    cardNumber: string;
-    date: string;
-    amount: number;
-    currencyType: string;
+    card: { // Добавляем объект card с полем cardNumber
+        cardNumber: string;
+    };
+    transactionDate: string; // Поле для даты транзакции
+    gasStation: string; // Поле для описания заправки
+    total: number; // Поле для суммы транзакции
+    currencyType: string; // Валюта транзакции, если она используется
 }
+
 
 interface CardData {
     id: string;
