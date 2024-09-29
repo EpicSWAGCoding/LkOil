@@ -10,6 +10,7 @@ interface Props {
 }
 
 export const Header: FC<Props> = ({ className }) => {
+
     const pathname = usePathname();
 
     return (

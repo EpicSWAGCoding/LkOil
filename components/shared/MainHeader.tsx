@@ -18,6 +18,10 @@ export const MainHeader: FC<Props> = ({ className }) => {
     const [username, setUsername] = useState<string | null>(null);
     const router = useRouter(); // Инициализация useRouter
 
+    const formatPhoneNumber = (phoneNumber: string) => {
+        return phoneNumber.replace(/(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})/, '+$1 ($2) $3-$4-$5');
+    };
+
     useEffect(() => {
         const fetchProfile = async () => {
             const response = await fetch('/api/profile');
@@ -76,11 +80,11 @@ export const MainHeader: FC<Props> = ({ className }) => {
                         <div className="space-y-1">
                             <p className="flex items-center">
                                 <MapPin className="w-4 h-4 mr-2" />
-                                <span>ЛНР, г.Ровеньки, ул.Выгонная, 2</span>
+                                <span>ЛНР, г. Ровеньки, ул. Выгонная, 2</span>
                             </p>
                             <p className="flex items-center">
                                 <PhoneCall className="w-4 h-4 mr-2" />
-                                <span>+7 857 335-06-56</span>
+                                <span>{formatPhoneNumber('78573350656')}</span>
                             </p>
                             <p className="flex items-center">
                                 <Mail className="w-4 h-4 mr-2" />
@@ -97,7 +101,7 @@ export const MainHeader: FC<Props> = ({ className }) => {
                             </p>
                             <p className="flex items-center">
                                 <PhoneCall className="w-4 h-4 mr-2" />
-                                <span>7 959 102-12-82</span>
+                                <span>{formatPhoneNumber('79591021282')}</span>
                             </p>
                             <p className="flex items-center">
                                 <Mail className="w-4 h-4 mr-2" />

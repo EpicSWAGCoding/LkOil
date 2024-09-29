@@ -30,6 +30,8 @@ export const SelectComponents = () => {
     const [selectData, setSelectData] = useState<SelectData | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
+    const [transactions, setTransactions] = useState([]);
+
     useEffect(() => {
         setIsLoading(true);
         fetch('/api/select-data')

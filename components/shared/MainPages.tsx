@@ -39,6 +39,15 @@ const fetchMainData = async (): Promise<MainData> => {
 }
 
 export const MainPages = () => {
+
+    const formatDate = (date: string) => {
+        return new Date(date).toLocaleDateString('ru-RU', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        });
+    };
+
     const [data, setData] = useState<MainData>({
         balance: 0,
         activeCards: 0,
@@ -73,7 +82,7 @@ export const MainPages = () => {
                         <Wallet className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">{data.balance} ₽</div>
+                        <div className="text-2xl font-bold">{data.balance.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</div>
                     </CardContent>
                 </Card>
                 <Card>
@@ -112,10 +121,10 @@ export const MainPages = () => {
                         <TableBody>
                             {data.recentTransactions.map((transaction) => (
                                 <TableRow key={transaction.id}>
-                                    <TableCell>{transaction.transactionDate}</TableCell>
+                                    <TableCell>{formatDate(transaction.transactionDate)}</TableCell>
                                     <TableCell>{transaction.cardNumber}</TableCell>
                                     <TableCell>{transaction.gasStation}</TableCell>
-                                    <TableCell>{transaction.total} ₽</TableCell>
+                                    <TableCell>{transaction.total.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

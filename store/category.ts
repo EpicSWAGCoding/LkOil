@@ -4,15 +4,18 @@ import { persist } from 'zustand/middleware';
 interface SelectOptions {
     contractor: string;
     account: string;
-    card: string;
+    card: {
+        id: string;
+        name: string;
+    };
 }
 
 interface SelectStore {
     selectedOptions: SelectOptions;
     setContractor: (contractor: string) => void;
     setAccount: (account: string) => void;
-    setCard: (card: string) => void;
-    clearSelections: () => void; // Добавьте этот метод
+    setCard: (card: { id: string; name: string }) => void; // Модифицировано
+    clearSelections: () => void;
 }
 
 export const useSelectStore = create(
@@ -21,7 +24,10 @@ export const useSelectStore = create(
             selectedOptions: {
                 contractor: '',
                 account: '',
-                card: '',
+                card: {
+                    id: '',
+                    name: ''
+                },
             },
             setContractor: (contractor) =>
                 set((state) => ({
@@ -33,11 +39,15 @@ export const useSelectStore = create(
                 })),
             setCard: (card) =>
                 set((state) => ({
-                    selectedOptions: { ...state.selectedOptions, card },
+                    selectedOptions: { ...state.selectedOptions, card }, // Теперь сохраняем и id, и name
                 })),
             clearSelections: () =>
                 set(() => ({
-                    selectedOptions: { contractor: '', account: '', card: '' },
+                    selectedOptions: {
+                        contractor: '',
+                        account: '',
+                        card: { id: '', name: '' },
+                    },
                 })),
         }),
         {
