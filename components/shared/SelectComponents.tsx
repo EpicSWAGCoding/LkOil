@@ -97,7 +97,7 @@ export const SelectComponents = () => {
             </Select>
 
             <Select
-                onValueChange={(value) => setCard(value)} // Убедитесь, что сюда передается ID карты как строка
+                onValueChange={setCard as any}
                 value={selectedOptions.card || ""}
                 disabled={!selectedOptions.contractor || !selectedOptions.account}
             >
@@ -117,7 +117,6 @@ export const SelectComponents = () => {
                         ))}
                 </SelectContent>
             </Select>
-
 
             <div className="flex gap-2">
                 <Popover>
