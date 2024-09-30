@@ -83,6 +83,7 @@ export const CardWithForm: FC<Props> = () => {
             if (data.success) {
                 setIsSmsSent(true);
             } else {
+                console.log(data.message)
                 setPhoneError(data.message || 'Ошибка отправки SMS');
             }
         } catch (error: any) {
