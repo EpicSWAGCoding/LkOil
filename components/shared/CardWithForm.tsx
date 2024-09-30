@@ -80,10 +80,11 @@ export const CardWithForm: FC<Props> = () => {
             });
 
             const data = await response.json();
+            console.log(data)
+            console.log(data.success)
             if (data.success) {
                 setIsSmsSent(true);
             } else {
-                console.log(data.message)
                 setPhoneError(data.message || 'Ошибка отправки SMS');
             }
         } catch (error: any) {
