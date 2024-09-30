@@ -181,10 +181,8 @@ export const CardWithForm: FC<Props> = () => {
                         </label>
                         <IntlTelInput
                             initialValue={phoneNumber}
-                            onChangeNumber={(isValid, value) => {
-                                setPhoneNumber(value);
-                                setIsValid(isValid);
-                            }}
+                            onChangeNumber={setPhoneNumber}
+                            onChangeValidity={setIsValid}
                             initOptions={{
                                 initialCountry: 'ru',
                                 utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
