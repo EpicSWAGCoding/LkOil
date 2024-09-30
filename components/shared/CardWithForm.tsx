@@ -181,7 +181,7 @@ export const CardWithForm: FC<Props> = () => {
                         </label>
                         <IntlTelInput
                             initialValue={phoneNumber}
-                            onChangeNumber={(isValid, value, countryData) => {
+                            onChangeNumber={(isValid, value) => {
                                 setPhoneNumber(value);
                                 setIsValid(isValid);
                             }}
