@@ -17,14 +17,12 @@ export const CardWithForm: FC<Props> = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [isSmsSent, setIsSmsSent] = useState(false);
     const [smsCode, setSmsCode] = useState('');
+    const [phoneError, setPhoneError] = useState<string | null>(null);
 
     const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-
-        // Убираем пробелы и форматируем номер карты
-        const cleanValue = value.replace(/\D/g, '').slice(0, 16); // только цифры, не более 16
-        const formattedValue = cleanValue.replace(/(.{4})/g, '$1 ').trim(); // добавляем пробелы
-
+        const cleanValue = value.replace(/\D/g, '').slice(0, 16);
+        const formattedValue = cleanValue.replace(/(.{4})/g, '$1 ').trim();
         setCardNumber(formattedValue);
     };
 
@@ -33,7 +31,6 @@ export const CardWithForm: FC<Props> = () => {
         setLoading(true);
         setError(null);
 
-        // Убираем пробелы из номера карты
         const cleanCardNumber = cardNumber.replace(/\s/g, '');
 
         try {
@@ -51,7 +48,6 @@ export const CardWithForm: FC<Props> = () => {
             } else {
                 setError(data.message || 'Ошибка авторизации');
             }
-
         } catch (error: any) {
             console.error('Ошибка при авторизации:', error);
             setError('Ошибка подключения к серверу: ' + error.message);
@@ -62,19 +58,70 @@ export const CardWithForm: FC<Props> = () => {
 
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-
-        // Убираем все символы кроме цифр и "+"
-        const cleanValue = value.replace(/[^+\d]/g, '').slice(0, 16);
+        const cleanValue = value.replace(/[^+\d]/g, '').slice(0, 12);
         setPhoneNumber(cleanValue);
+    };
+
+    const handleSendSms = async () => {
+        setLoading(true);
+        setPhoneError(null);
+
+        try {
+            const response = await fetch('/api/send-sms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ phoneNumber }),
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                setIsSmsSent(true);
+            } else {
+                setPhoneError(data.message || 'Ошибка отправки SMS');
+            }
+        } catch (error: any) {
+            console.error('Ошибка при отправке SMS:', error);
+            setPhoneError('Ошибка подключения к серверу: ' + error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleVerifySms = async () => {
+        setLoading(true);
+        setPhoneError(null);
+
+        try {
+            const response = await fetch('/api/verify-sms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ phoneNumber, smsCode }),
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                router.push('/');
+            } else {
+                setPhoneError(data.message || 'Неверный код подтверждения');
+            }
+        } catch (error: any) {
+            console.error('Ошибка при верификации SMS:', error);
+            setPhoneError('Ошибка подключения к серверу: ' + error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handlePhoneSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!isSmsSent) {
-            console.log('Sending SMS to:', phoneNumber);
-            setIsSmsSent(true);
+            handleSendSms();
         } else {
-            console.log('Phone Login Submitted:', { phoneNumber, smsCode });
+            handleVerifySms();
         }
     };
 
@@ -134,6 +181,7 @@ export const CardWithForm: FC<Props> = () => {
                             placeholder="+7 (000) 000-00-00"
                             value={phoneNumber}
                             onChange={handlePhoneChange}
+                            disabled={isSmsSent}
                         />
                     </div>
 
@@ -153,8 +201,10 @@ export const CardWithForm: FC<Props> = () => {
                         </div>
                     )}
 
-                    <Button type="submit" className="w-full">
-                        {isSmsSent ? 'Войти' : 'Получить код'}
+                    {phoneError && <div className="text-red-500">{phoneError}</div>}
+
+                    <Button type="submit" className="w-full" disabled={loading}>
+                        {loading ? 'Загрузка...' : (isSmsSent ? 'Войти' : 'Получить код')}
                     </Button>
                 </form>
             </TabsContent>
