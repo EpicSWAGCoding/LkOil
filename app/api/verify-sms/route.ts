@@ -1,30 +1,30 @@
-// /verify-sms/route.ts
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { prisma } from "@/prisma/prisma-client";
+import { NextResponse } from 'next/server';
+import { prisma } from '@/prisma/prisma-client';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method === 'POST') {
-        const { phoneNumber, smsCode } = req.body
+// POST запрос для проверки SMS-кода
+export async function POST(req: Request) {
+    const { phoneNumber, smsCode } = await req.json(); // Получаем тело запроса
 
-        try {
-            // Получение сохраненного кода из базы данных
-            const savedCode = await prisma.smsCode.findFirst({
-                where: { phoneNumber },
-                orderBy: { createdAt: 'desc' }, // Берем последний сохраненный код
-            })
+    try {
+        // Получение сохраненного кода из базы данных
+        const savedCode = await prisma.smsCode.findFirst({
+            where: { phoneNumber },
+            orderBy: { createdAt: 'desc' }, // Берем последний сохраненный код
+        });
 
-            if (savedCode && savedCode.code === smsCode) {
-                // Код верен
-                res.status(200).json({ success: true, message: 'Код подтвержден' })
-            } else {
-                // Код неверен
-                res.status(400).json({ success: false, message: 'Неверный код' })
-            }
-        } catch (error) {
-            res.status(500).json({ success: false, message: 'Ошибка проверки кода', error })
+        if (savedCode && savedCode.code === smsCode) {
+            // Код верен
+            return NextResponse.json({ success: true, message: 'Код подтвержден' }, { status: 200 });
+        } else {
+            // Код неверен
+            return NextResponse.json({ success: false, message: 'Неверный код' }, { status: 400 });
         }
-    } else {
-        res.setHeader('Allow', ['POST'])
-        res.status(405).end(`Method ${req.method} Not Allowed`)
+    } catch (error) {
+        return NextResponse.json({ success: false, message: 'Ошибка проверки кода', error }, { status: 500 });
     }
+}
+
+// Обработка методов, отличных от POST
+export function OPTIONS() {
+    return NextResponse.json({ message: 'Method not allowed' }, { status: 405 });
 }
