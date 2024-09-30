@@ -1,5 +1,10 @@
+import { LimitSetting, Container, Header } from "@/components/shared";
+
 export default function LimitsPage() {
     return (
-        <h1>Страница установки лимитов</h1>
+        <Container>
+            <Header />
+            <LimitSetting />
+        </Container>
     );
 }
