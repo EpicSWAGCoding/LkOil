@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/prisma/prisma-client';
 import twilio from 'twilio'
 
-const accountSid = process.env.TWILIO_ACCOUNT_SID || 'AC7f2dfcd203b72e8502dc152cd4daa673'
-const authToken = process.env.TWILIO_AUTH_TOKEN || '1e2ea7af46119fdd11a7526b50d8c6f0'
+const accountSid = process.env.TWILIO_ACCOUNT_SID
+const authToken = process.env.TWILIO_AUTH_TOKEN
 const client = twilio(accountSid, authToken)
 
 // POST запрос на отправку SMS
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
         // Отправка SMS через Twilio
         await client.messages.create({
             body: `Ваш код подтверждения: ${smsCode}`,
-            from: process.env.TWILIO_PHONE_NUMBER || '+79259044726', // Твой Twilio номер
+            from: process.env.TWILIO_PHONE_NUMBER, // Твой Twilio номер
             to: phoneNumber,
         });
 
