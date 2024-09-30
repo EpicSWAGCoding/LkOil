@@ -125,6 +125,7 @@ export const CardWithForm: FC<Props> = () => {
     };
 
     const handlePhoneSubmit = (e: React.FormEvent) => {
+        console.log(phoneNumber)
         e.preventDefault();
         if (!isSmsSent) {
             handleSendSms();
@@ -183,14 +184,13 @@ export const CardWithForm: FC<Props> = () => {
                         <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">
                             Номер телефона
                         </label>
-                        <IntlTelInput
-                            initialValue={phoneNumber}
-                            onChangeNumber={setPhoneNumber}
-                            onChangeValidity={setIsValid}
-                            initOptions={{
-                                initialCountry: 'ru',
-                                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
-                            }}
+                        <Input
+                            id="phoneNumber"
+                            className="mt-1"
+                            placeholder="+7 (000) 000-00-00"
+                            value={phoneNumber}
+                            onChange={handlePhoneChange}
+                            disabled={isSmsSent}
                         />
                     </div>
 
