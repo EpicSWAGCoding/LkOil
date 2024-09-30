@@ -23,6 +23,9 @@ export async function POST(req: Request) {
             },
         });
 
+        console.log(phoneNumber)
+        console.log(smsCode)
+
         // Отправка SMS через Twilio
         await client.messages.create({
             body: `Ваш код подтверждения: ${smsCode}`,
