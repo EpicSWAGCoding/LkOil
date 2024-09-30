@@ -7,7 +7,7 @@ const authToken = process.env.TWILIO_AUTH_TOKEN
 const client = twilio(accountSid, authToken)
 
 // POST запрос на отправку SMS
-export async function POST(req: Request) {
+export async function POST(req: Request, res: Response) {
     const { phoneNumber } = await req.json(); // Получаем тело запроса
 
     try {
