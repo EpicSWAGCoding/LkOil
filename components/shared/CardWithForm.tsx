@@ -3,6 +3,8 @@
 import { Button, Input, Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui";
 import { FC, useState } from "react";
 import { useRouter } from 'next/navigation';
+import IntlTelInput from 'intl-tel-input/react';
+import 'intl-tel-input/build/css/intlTelInput.css';
 
 interface Props {
     className?: string;
@@ -18,6 +20,8 @@ export const CardWithForm: FC<Props> = () => {
     const [isSmsSent, setIsSmsSent] = useState(false);
     const [smsCode, setSmsCode] = useState('');
     const [phoneError, setPhoneError] = useState<string | null>(null);
+
+    const [isValid, setIsValid] = useState(false);
 
     const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
@@ -175,13 +179,16 @@ export const CardWithForm: FC<Props> = () => {
                         <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">
                             Номер телефона
                         </label>
-                        <Input
-                            id="phoneNumber"
-                            className="mt-1"
-                            placeholder="+7 (000) 000-00-00"
-                            value={phoneNumber}
-                            onChange={handlePhoneChange}
-                            disabled={isSmsSent}
+                        <IntlTelInput
+                            initialValue={phoneNumber}
+                            onChangeNumber={(isValid, value, countryData) => {
+                                setPhoneNumber(value);
+                                setIsValid(isValid);
+                            }}
+                            initOptions={{
+                                initialCountry: 'ru',
+                                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+                            }}
                         />
                     </div>
 
