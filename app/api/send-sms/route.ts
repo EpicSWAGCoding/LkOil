@@ -33,16 +33,6 @@ export async function POST(req: Request, res: Response) {
         return NextResponse.json({ success: true, message: 'SMS отправлено' }, { status: 200 });
     } catch (error) {
         console.error('Ошибка при отправке SMS:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Ошибка отправки SMS',
-            error: {
-                status: error.status,
-                code: error.code,
-                moreInfo: error.moreInfo,
-                message: error.message
-            }
-        });
     }
 }
 
