@@ -70,6 +70,8 @@ export const CardWithForm: FC<Props> = () => {
         setLoading(true);
         setPhoneError(null);
 
+        console.log(phoneNumber)
+
         try {
             const response = await fetch('/api/send-sms', {
                 method: 'POST',
