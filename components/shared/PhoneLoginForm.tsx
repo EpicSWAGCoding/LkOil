@@ -1,17 +1,15 @@
 'use client'
 
-import { Button, Input } from '@/components/ui';
-import { FC } from 'react';
+import { Input } from '@/components/ui';
 import { useRouter } from 'next/navigation';
 import { usePhoneAuth } from '@/hooks';
 
-export const PhoneLoginForm: FC = ({ loading }) => {
+export const PhoneLoginForm = () => {
 	
 	const {
 		phoneNumber,
 		smsCode,
 		phoneError,
-		loading: phoneLoading,
 		isSmsSent,
 		handlePhoneChange,
 		setSmsCode,
@@ -65,9 +63,9 @@ export const PhoneLoginForm: FC = ({ loading }) => {
 			
 			{phoneError && <div className="text-red-500">{phoneError}</div>}
 			
-			<Button type="submit" className="w-full" disabled={loading}>
-				{loading ? 'Загрузка...' : (isSmsSent ? 'Войти' : 'Получить код')}
-			</Button>
+			{/*<Button type="submit" className="w-full" disabled={loading}>*/}
+			{/*	{loading ? 'Загрузка...' : (isSmsSent ? 'Войти' : 'Получить код')}*/}
+			{/*</Button>*/}
 		</form>
 	);
 };
