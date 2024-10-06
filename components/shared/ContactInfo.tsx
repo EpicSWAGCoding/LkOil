@@ -13,6 +13,13 @@ import {
 	DialogTrigger
 } from '@/components/ui'
 
+interface ContactInfoProps {
+	title: string;
+	address: string;
+	phone: string;
+	email: string;
+}
+
 export const ContactInfo = ({ title, address, phone, email }) => {
 	
 	const [isOpen, setIsOpen] = useState(false)
