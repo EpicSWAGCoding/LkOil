@@ -22,7 +22,7 @@ import { PiggyBank } from 'lucide-react';
 
 export const CardsFilter = () => {
     const { selectedOptions } = useSelectStore();
-    const cardId = selectedOptions.card;
+    const cardId = selectedOptions.card?.id; // Извлекаем id из объекта card
     
     const { transactionsData, loading, error, cardNumber } = useCardTransactions(cardId);
     
