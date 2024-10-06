@@ -62,7 +62,7 @@ export const AccountDetails = ({ selectedAccount, isAdmin }: AccountDetailsProps
 	return (
 		<Card className="w-full max-w-4xl mx-auto shadow-lg">
 			<CardHeader>
-				<CardTitle>Общая информация</CardTitle>
+				<CardTitle>Общая информация </CardTitle>
 			</CardHeader>
 			<CardContent className="p-6">
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
