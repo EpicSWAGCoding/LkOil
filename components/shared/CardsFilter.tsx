@@ -20,6 +20,18 @@ import { useSelectStore } from '@/store/category';
 import { formatCurrency, formatDate, useCardTransactions } from '@/hooks';
 import { PiggyBank } from 'lucide-react';
 
+interface Transaction {
+    id: number;
+    card: {
+        cardNumber: string;
+    };
+    transactionDate: string;
+    gasStation: string;
+    total: number;
+    currencyType: string;
+}
+
+
 export const CardsFilter = () => {
     const { selectedOptions } = useSelectStore();
     const cardId = selectedOptions.card?.id; // Извлекаем id из объекта card
