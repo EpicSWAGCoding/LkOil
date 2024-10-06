@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 const useFetchCardsLimit = (inn: string, accountNumber: string) => {
 	const [cards, setCards] = useState([]);
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
+	const [error, setError] = useState<string | null>(null);
 	
 	useEffect(() => {
 		const fetchCards = async () => {
