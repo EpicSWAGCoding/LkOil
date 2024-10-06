@@ -71,35 +71,35 @@ export const LimitSetting = () => {
         );
     };
     
-    const handleSetLimits = async () => {
-        const selectedCardIds = selectedCards;
-        
-        try {
-            const responses = await Promise.all(selectedCardIds.map(cardId => {
-                return fetch('/api/limitsset', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        fuelType,
-                        limit,
-                        driverName: driver,
-                        carNumber,
-                        cardId
-                    }),
-                });
-            }));
-            
-            const results = await Promise.all(responses.map(res => res.json()));
-            console.log('Limits set successfully:', results);
-            // Обновляем список лимитов после установки
-            fetchLimits();
-        } catch (error) {
-            console.error('Error setting limits:', error);
-            setError('Не удалось установить лимиты');
-        }
-    };
+    // const handleSetLimits = async () => {
+    //     const selectedCardIds = selectedCards;
+    //
+    //     try {
+    //         const responses = await Promise.all(selectedCardIds.map(cardId => {
+    //             return fetch('/api/limitsset', {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                 },
+    //                 body: JSON.stringify({
+    //                     fuelType,
+    //                     limit,
+    //                     driverName: driver,
+    //                     carNumber,
+    //                     cardId
+    //                 }),
+    //             });
+    //         }));
+    //
+    //         const results = await Promise.all(responses.map(res => res.json()));
+    //         console.log('Limits set successfully:', results);
+    //         // Обновляем список лимитов после установки
+    //         fetchLimits();
+    //     } catch (error) {
+    //         console.error('Error setting limits:', error);
+    //         setError('Не удалось установить лимиты');
+    //     }
+    // };
     
     const handleBlockCards = async () => {
         try {
@@ -275,7 +275,8 @@ export const LimitSetting = () => {
                       </CardContent>
                   </Card>
                   <div className="flex space-x-4">
-                      <Button onClick={handleSetLimits}>Установить лимиты</Button>
+                      {/*<Button onClick={handleSetLimits}>Установить лимиты</Button>*/}
+                      <Button onClick={() => {}}>Установить лимиты</Button>
                       <Button onClick={handleBlockCards} variant="destructive">Заблокировать</Button>
                   </div>
               </div>
