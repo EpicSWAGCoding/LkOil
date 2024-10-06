@@ -46,7 +46,7 @@ export const LimitSetting = () => {
     const [limits, setLimits] = useState<Limit[]>([]);
     const [filteredLimits, setFilteredLimits] = useState<Limit[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
     
     // Функция для поиска
     const handleSearch = () => {
