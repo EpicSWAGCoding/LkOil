@@ -132,9 +132,9 @@ export const LimitSetting = () => {
             console.log('Cards blocked successfully:', result);
             // Обновляем список лимитов после блокировки
             fetchLimits();
-        } catch (error) {
-            console.error('Error blocking cards:', error);
-            setError(error);
+        } catch (err) {
+            console.error('Error blocking cards:', err);
+            setError(err instanceof Error ? err.message : 'Неизвестная ошибка');
         }
     };
     
@@ -151,9 +151,8 @@ export const LimitSetting = () => {
             const data = await response.json();
             setLimits(data);
             setFilteredLimits(data);
-        } catch (error) {
-            console.error('Error fetching limits:', error);
-            setError(error);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Неизвестная ошибка');
         } finally {
             setLoading(false);
         }
