@@ -2,7 +2,7 @@
 
 import { FC, useState } from 'react';
 import { AccountDetails, Container, Loader } from '@/components/shared';
-import { Button } from '/components/ui';
+import { Button } from '@/components/ui';
 import { useSelectStore } from '@/store/category';
 import { useAccountData } from '@/hooks';
 
