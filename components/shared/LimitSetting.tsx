@@ -43,8 +43,8 @@ export const LimitSetting = () => {
     const [driver, setDriver] = useState('');
     const [carNumber, setCarNumber] = useState('');
     const [selectedCards, setSelectedCards] = useState<number[]>([]);
-    const [limits, setLimits] = useState([]);
-    const [filteredLimits, setFilteredLimits] = useState([]);
+    const [limits, setLimits] = useState<Limit[]>([]);
+    const [filteredLimits, setFilteredLimits] = useState<Limit[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     
