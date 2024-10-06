@@ -84,7 +84,7 @@ export const CardsFilter = () => {
                       </Table>
                   </CardContent>
                   <CardHeader>
-                      <CardTitle>Итого</CardTitle>
+                      <CardTitle>Итого </CardTitle>
                   </CardHeader>
                   <CardContent>
                       <div className="relative">
