@@ -17,7 +17,7 @@ const useFetchCardsLimit = (inn: string, accountNumber: string) => {
 					setError(data.error);
 				}
 			} catch (err) {
-				setError('Failed to fetch cards');
+				setError(err instanceof Error ? err.message : 'Неизвестная ошибка');
 			} finally {
 				setLoading(false);
 			}
