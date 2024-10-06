@@ -20,8 +20,7 @@ interface ContactInfoProps {
 	email: string;
 }
 
-export const ContactInfo = ({ title, address, phone, email }) => {
-	
+export const ContactInfo: React.FC<ContactInfoProps> = ({ title, address, phone, email }) => {
 	const [isOpen, setIsOpen] = useState(false)
 	
 	return (
