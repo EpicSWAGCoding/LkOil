@@ -134,7 +134,7 @@ export const LimitSetting = () => {
             fetchLimits();
         } catch (error) {
             console.error('Error blocking cards:', error);
-            setError('Не удалось заблокировать карты');
+            setError(error);
         }
     };
     
@@ -153,7 +153,7 @@ export const LimitSetting = () => {
             setFilteredLimits(data);
         } catch (error) {
             console.error('Error fetching limits:', error);
-            setError('Не удалось загрузить данные лимитов');
+            setError(error);
         } finally {
             setLoading(false);
         }
