@@ -1,7 +1,5 @@
-'use client'
-
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
     Button,
     Card,
@@ -16,19 +14,19 @@ import {
     DialogTrigger,
     Input,
     Label
-} from '@/components/ui'
-import { formatPhoneNumber, toast, useFormatCardNumber } from '@/hooks'
-import { LoaderProfile, PinCodeInput } from '@/components/shared'
+} from '@/components/ui';
+import { formatPhoneNumber, toast, useFormatCardNumber } from '@/hooks';
+import { LoaderProfile } from '@/components/shared';
 
 interface ProfileData {
-    name: string
-    inn: string
-    kpp: string
-    fullName: string
-    phone: string
-    email: string
-    login: string
-    username: string
+    name: string;
+    inn: string;
+    kpp: string;
+    fullName: string;
+    phone: string;
+    email: string;
+    login: string;
+    username: string;
 }
 
 export const Profile = () => {
@@ -41,127 +39,130 @@ export const Profile = () => {
         email: '',
         login: '',
         username: ''
-    })
+    });
     
-    const [loading, setLoading] = useState(true)
-    const [editableData, setEditableData] = useState<ProfileData>(profileData)
-    const [isAdmin, setIsAdmin] = useState(false)
-    const [isEditing, setIsEditing] = useState(false)
-    const router = useRouter()
+    const [loading, setLoading] = useState(true);
+    const [editableData, setEditableData] = useState<ProfileData>(profileData);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const router = useRouter();
     
-    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
-    const [isPinModalOpen, setIsPinModalOpen] = useState(false)
-    const [currentPassword, setCurrentPassword] = useState('')
-    const [newPassword, setNewPassword] = useState('')
-    const [currentPin, setCurrentPin] = useState('')
-    const [newPin, setNewPin] = useState('')
+    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+    const [isPinModalOpen, setIsPinModalOpen] = useState(false);
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [currentPin, setCurrentPin] = useState('');
+    const [newPin, setNewPin] = useState('');
+    
+    // Вызов хука для форматирования номера карты
+    const formattedCardNumber = useFormatCardNumber(editableData.login);
     
     useEffect(() => {
-        fetchProfileData()
-    }, [])
+        fetchProfileData();
+    }, []);
     
     const fetchProfileData = async () => {
         try {
-            setLoading(true)
-            const response = await fetch('/api/profile')
+            setLoading(true);
+            const response = await fetch('/api/profile');
             if (response.ok) {
-                const data = await response.json()
-                setProfileData(data.profile)
-                setEditableData(data.profile)
-                setIsAdmin(data.isAdmin)
+                const data = await response.json();
+                setProfileData(data.profile);
+                setEditableData(data.profile);
+                setIsAdmin(data.isAdmin);
             } else {
-                console.error('Failed to fetch profile data')
+                console.error('Failed to fetch profile data');
                 toast({
                     title: "Ошибка",
                     description: "Не удалось загрузить данные профиля",
                     variant: "destructive",
-                })
+                });
             }
         } catch (error) {
-            console.error('Error fetching profile data:', error)
+            console.error('Error fetching profile data:', error);
             toast({
                 title: "Ошибка",
                 description: "Произошла ошибка при загрузке данных профиля",
                 variant: "destructive",
-            })
+            });
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
-    }
+    };
     
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target
-        setEditableData(prev => ({ ...prev, [name]: value }))
-    }
+        const { name, value } = e.target;
+        setEditableData(prev => ({ ...prev, [name]: value }));
+    };
     
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
-            setLoading(true)
+            setLoading(true);
             const response = await fetch('/api/profile', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(editableData),
-            })
+            });
             if (response.ok) {
-                setIsEditing(false)
-                setProfileData(editableData)
+                setIsEditing(false);
+                setProfileData(editableData);
                 toast({
                     title: "Успех",
                     description: "Профиль успешно обновлен",
-                })
+                });
             } else {
-                console.error('Failed to update profile')
+                console.error('Failed to update profile');
                 toast({
                     title: "Ошибка",
                     description: "Не удалось обновить профиль",
                     variant: "destructive",
-                })
+                });
             }
         } catch (error) {
-            console.error('Error updating profile:', error)
+            console.error('Error updating profile:', error);
             toast({
                 title: "Ошибка",
                 description: "Произошла ошибка при обновлении профиля",
                 variant: "destructive",
-            })
+            });
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
-    }
+    };
     
     const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
-        setIsEditing(true)
-        setEditableData(profileData)
-    }
+        e.preventDefault();
+        setIsEditing(true);
+        setEditableData(profileData);
+    };
     
     const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
-        setIsEditing(false)
-        setEditableData(profileData)
-    }
+        e.preventDefault();
+        setIsEditing(false);
+        setEditableData(profileData);
+    };
     
     const handlePasswordChange = async () => {
         // Здесь должна быть логика для изменения пароля
-        console.log('Changing password:', { currentPassword, newPassword })
-        setIsPasswordModalOpen(false)
-        setCurrentPassword('')
-        setNewPassword('')
-    }
+        console.log('Changing password:', { currentPassword, newPassword });
+        setIsPasswordModalOpen(false);
+        setCurrentPassword('');
+        setNewPassword('');
+    };
     
     const handlePinChange = async () => {
         // Здесь должна быть логика для изменения PIN-кода
-        console.log('Changing PIN:', { currentPin, newPin })
-        setIsPinModalOpen(false)
-        setCurrentPin('')
-        setNewPin('')
-    }
+        console.log('Changing PIN:', { currentPin, newPin });
+        setIsPinModalOpen(false);
+        setCurrentPin('');
+        setNewPin('');
+    };
     
     if (loading) {
-        return <LoaderProfile />
+        return <LoaderProfile />;
     }
     
     return (
@@ -227,7 +228,7 @@ export const Profile = () => {
                           <Input
                             id="login"
                             name="login"
-                            value={useFormatCardNumber(editableData.login)}
+                            value={formattedCardNumber} // Используем отформатированный номер карты
                             disabled
                           />
                       </div>
@@ -268,69 +269,20 @@ export const Profile = () => {
                                       </div>
                                   </div>
                                   <DialogFooter>
-                                      <Button type="submit" onClick={handlePasswordChange}>Сохранить</Button>
-                                  </DialogFooter>
-                              </DialogContent>
-                          </Dialog>
-                      </div>
-                      <div>
-                          <Label htmlFor="pin">PIN-код</Label>
-                          <Dialog open={isPinModalOpen} onOpenChange={setIsPinModalOpen}>
-                              <DialogTrigger asChild>
-                                  <Button variant="outline" className="w-full">Изменить PIN-код</Button>
-                              </DialogTrigger>
-                              <DialogContent className="sm:max-w-[425px] bg-white">
-                                  <DialogHeader>
-                                      <DialogTitle>Изменение PIN-кода</DialogTitle>
-                                  </DialogHeader>
-                                  <div className="grid gap-4 py-4">
-                                      <div className="grid grid-cols-4 items-center gap-4">
-                                          <Label htmlFor="current-pin" className="text-right">
-                                              Текущий PIN
-                                          </Label>
-                                          <PinCodeInput
-                                            value={currentPin}
-                                            onChange={setCurrentPin}
-                                          />
-                                      </div>
-                                      <div className="grid grid-cols-4 items-center gap-4">
-                                          <Label htmlFor="new-pin" className="text-right">
-                                              Новый PIN
-                                          </Label>
-                                          <PinCodeInput
-                                            value={newPin}
-                                            onChange={setNewPin}
-                                          />
-                                      </div>
-                                  </div>
-                                  <DialogFooter>
-                                      <Button type="submit" onClick={handlePinChange}>Сохранить</Button>
+                                      <Button type="button" variant="outline" onClick={() => setIsPasswordModalOpen(false)}>Отменить</Button>
+                                      <Button onClick={handlePasswordChange}>Сохранить</Button>
                                   </DialogFooter>
                               </DialogContent>
                           </Dialog>
                       </div>
                   </div>
                   {isAdmin && (
-                    <div className="flex justify-between items-center">
-                        {isEditing ? (
-                          <>
-                              <Button type="button" onClick={handleSubmit}>Сохранить</Button>
-                              <Button type="button" variant="outline" onClick={handleCancel}>Отмена</Button>
-                          </>
-                        ) : (
-                          <Button type="button" onClick={handleEdit}>Редактировать</Button>
-                        )}
-                    </div>
+                    <Button type="button" onClick={handleEdit}>
+                        {isEditing ? 'Сохранить' : 'Редактировать'}
+                    </Button>
                   )}
-
               </form>
-              {isAdmin && (
-                <div className="mt-4 space-x-4">
-                    <Button onClick={() => router.push('/billing')}>Счета</Button>
-                    <Button onClick={() => router.push('/card')}>Карты</Button>
-                </div>
-              )}
           </CardContent>
       </Card>
-    )
-}
+    );
+};
