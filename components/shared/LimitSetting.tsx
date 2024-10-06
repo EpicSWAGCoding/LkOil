@@ -25,6 +25,18 @@ import {
 } from '@/components/ui';
 import { Car, CreditCard, Fuel, User } from 'lucide-react';
 
+interface Limit {
+    id: number;
+    fuelType: string;
+    limit: number;
+    driverName: string;
+    carNumber: string;
+    isBlocked: boolean;
+    card: {
+        cardNumber: string;
+    };
+}
+
 export const LimitSetting = () => {
     const [fuelType, setFuelType] = useState('');
     const [limit, setLimit] = useState('');
@@ -51,7 +63,6 @@ export const LimitSetting = () => {
                   (!carNumber || limitItem.carNumber.toLowerCase().includes(carNumber.toLowerCase()))
                 );
             });
-            console.log('Filtered limits:', filtered);
             setFilteredLimits(filtered);
         }
     };
