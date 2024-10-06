@@ -1,7 +1,10 @@
+'use client'
+
 import { Nunito } from 'next/font/google';
 
 import './globals.css';
-import {AuthProvider} from "@/app/contexts/AuthContext";
+import { AuthProvider } from '@/app/contexts/AuthContext';
+import { YMaps } from '@pbe/react-yandex-maps';
 
 const nunito = Nunito({
   subsets: ['cyrillic'],
@@ -12,6 +15,7 @@ const nunito = Nunito({
 export default function RootLayout({ children, }: Readonly <{ children: React.ReactNode; }>) {
   return (
       <AuthProvider>
+        <YMaps>
           <html lang="en">
             <head>
               <link data-rh="true" rel="icon" href="/logo.png" />
@@ -20,6 +24,7 @@ export default function RootLayout({ children, }: Readonly <{ children: React.Re
                 {children}
             </body>
           </html>
+        </YMaps>
       </AuthProvider>
   );
 }

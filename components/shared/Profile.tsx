@@ -1,10 +1,24 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button, Input, Label, Card, CardContent, CardHeader, CardTitle } from "@/components/ui"
-import { toast } from "@/hooks/use-toast"
-import { LoaderProfile } from "@/components/shared/LoaderProfile";
+import {
+    Button,
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+    Dialog,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+    Input,
+    Label
+} from '@/components/ui'
+import { formatPhoneNumber, toast, useFormatCardNumber } from '@/hooks'
+import { LoaderProfile, PinCodeInput } from '@/components/shared'
 
 interface ProfileData {
     name: string
@@ -28,18 +42,24 @@ export const Profile = () => {
         login: '',
         username: ''
     })
-
+    
     const [loading, setLoading] = useState(true)
     const [editableData, setEditableData] = useState<ProfileData>(profileData)
     const [isAdmin, setIsAdmin] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
-    const [password, setPassword] = useState('')
     const router = useRouter()
-
+    
+    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
+    const [isPinModalOpen, setIsPinModalOpen] = useState(false)
+    const [currentPassword, setCurrentPassword] = useState('')
+    const [newPassword, setNewPassword] = useState('')
+    const [currentPin, setCurrentPin] = useState('')
+    const [newPin, setNewPin] = useState('')
+    
     useEffect(() => {
         fetchProfileData()
     }, [])
-
+    
     const fetchProfileData = async () => {
         try {
             setLoading(true)
@@ -68,16 +88,12 @@ export const Profile = () => {
             setLoading(false)
         }
     }
-
+    
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
         setEditableData(prev => ({ ...prev, [name]: value }))
     }
-
-    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value)
-    }
-
+    
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         try {
@@ -87,12 +103,11 @@ export const Profile = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ ...editableData, password }),
+                body: JSON.stringify(editableData),
             })
             if (response.ok) {
                 setIsEditing(false)
                 setProfileData(editableData)
-                setPassword('')
                 toast({
                     title: "Успех",
                     description: "Профиль успешно обновлен",
@@ -116,139 +131,206 @@ export const Profile = () => {
             setLoading(false)
         }
     }
-
+    
     const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         setIsEditing(true)
         setEditableData(profileData)
     }
-
+    
     const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         setIsEditing(false)
         setEditableData(profileData)
-        setPassword('')
     }
-
+    
+    const handlePasswordChange = async () => {
+        // Здесь должна быть логика для изменения пароля
+        console.log('Changing password:', { currentPassword, newPassword })
+        setIsPasswordModalOpen(false)
+        setCurrentPassword('')
+        setNewPassword('')
+    }
+    
+    const handlePinChange = async () => {
+        // Здесь должна быть логика для изменения PIN-кода
+        console.log('Changing PIN:', { currentPin, newPin })
+        setIsPinModalOpen(false)
+        setCurrentPin('')
+        setNewPin('')
+    }
+    
     if (loading) {
         return <LoaderProfile />
     }
-
+    
     return (
-        <Card className="w-full max-w-2xl mx-auto mt-8">
-            <CardHeader className="flex justify-between items-center">
-                <CardTitle>Профиль</CardTitle>
-            </CardHeader>
-            <CardContent>
-                <form className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {/* Контрагент (наименование) */}
-                        <div>
-                            <Label htmlFor="name">Контрагент (наименование)</Label>
-                            <Input
-                                id="name"
-                                name="name"
-                                value={profileData.name}
-                                onChange={isEditing && isAdmin ? handleInputChange : undefined}
-                                disabled={!isEditing || !isAdmin}
-                            />
-                        </div>
-                        {/* ИНН */}
-                        <div>
-                            <Label htmlFor="inn">ИНН</Label>
-                            <Input
-                                id="inn"
-                                name="inn"
-                                value={profileData.inn}
-                                onChange={isEditing && isAdmin ? handleInputChange : undefined}
-                                disabled={!isEditing || !isAdmin}
-                            />
-                        </div>
-                        {/* КПП */}
-                        <div>
-                            <Label htmlFor="kpp">КПП</Label>
-                            <Input
-                                id="kpp"
-                                name="kpp"
-                                value={profileData.kpp}
-                                onChange={isEditing && isAdmin ? handleInputChange : undefined}
-                                disabled={!isEditing || !isAdmin}
-                            />
-                        </div>
-                        {/* ФИО */}
-                        <div>
-                            <Label htmlFor="fullName">ФИО</Label>
-                            <Input
-                                id="fullName"
-                                name="fullName"
-                                value={profileData.username}
-                                onChange={isEditing && isAdmin ? handleInputChange : undefined}
-                                disabled={!isEditing || !isAdmin}
-                            />
-                        </div>
-                        {/* Телефон */}
-                        <div>
-                            <Label htmlFor="phone">Телефон</Label>
-                            <Input
-                                id="phone"
-                                name="phone"
-                                value={profileData.phone}
-                                onChange={isEditing && isAdmin ? handleInputChange : undefined}
-                                disabled={!isEditing || !isAdmin}
-                            />
-                        </div>
-                        {/* Email */}
-                        <div>
-                            <Label htmlFor="email">Email</Label>
-                            <Input
-                                id="email"
-                                name="email"
-                                value={profileData.email}
-                                onChange={isEditing && isAdmin ? handleInputChange : undefined}
-                                disabled={!isEditing || !isAdmin}
-                            />
-                        </div>
-                        {/* Логин */}
-                        <div>
-                            <Label htmlFor="login">Логин</Label>
-                            <Input
-                                id="login"
-                                name="login"
-                                value={profileData.login}
-                                disabled
-                            />
-                        </div>
-                        {/* Пароль */}
-                        <div>
-                            <Label htmlFor="password">Пароль</Label>
-                            <Input
-                                id="password"
-                                name="password"
-                                type="password"
-                                value={password}
-                                onChange={handlePasswordChange}
-                                disabled={!isEditing}
-                            />
-                        </div>
-                    </div>
+      <Card className="w-full max-w-2xl mx-auto mt-8">
+          <CardHeader className="flex justify-between items-center">
+              <CardTitle>Профиль</CardTitle>
+          </CardHeader>
+          <CardContent>
+              <form className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                          <Label htmlFor="name">Контрагент (наименование)</Label>
+                          <Input
+                            id="name"
+                            name="name"
+                            value={editableData.name}
+                            onChange={isEditing && isAdmin ? handleInputChange : undefined}
+                            disabled={!isEditing || !isAdmin}
+                          />
+                      </div>
+                      <div>
+                          <Label htmlFor="inn">ИНН</Label>
+                          <Input
+                            id="inn"
+                            name="inn"
+                            value={editableData.inn}
+                            onChange={isEditing && isAdmin ? handleInputChange : undefined}
+                            disabled={!isEditing || !isAdmin}
+                          />
+                      </div>
+                      <div>
+                          <Label htmlFor="fullName">ФИО</Label>
+                          <Input
+                            id="fullName"
+                            name="fullName"
+                            value={editableData.username}
+                            onChange={isEditing && isAdmin ? handleInputChange : undefined}
+                            disabled={!isEditing || !isAdmin}
+                          />
+                      </div>
+                      <div>
+                          <Label htmlFor="phone">Телефон</Label>
+                          <Input
+                            id="phone"
+                            name="phone"
+                            value={formatPhoneNumber(editableData.phone)}
+                            onChange={isEditing && isAdmin ? handleInputChange : undefined}
+                            disabled={!isEditing || !isAdmin}
+                          />
+                      </div>
+                      <div>
+                          <Label htmlFor="email">Email</Label>
+                          <Input
+                            id="email"
+                            name="email"
+                            value={editableData.email}
+                            onChange={isEditing && isAdmin ? handleInputChange : undefined}
+                            disabled={!isEditing || !isAdmin}
+                          />
+                      </div>
+                      <div>
+                          <Label htmlFor="login">Номер карты</Label>
+                          <Input
+                            id="login"
+                            name="login"
+                            value={useFormatCardNumber(editableData.login)}
+                            disabled
+                          />
+                      </div>
+                      <div>
+                          <Label htmlFor="password">Пароль</Label>
+                          <Dialog open={isPasswordModalOpen} onOpenChange={setIsPasswordModalOpen}>
+                              <DialogTrigger asChild>
+                                  <Button variant="outline" className="w-full">Изменить пароль</Button>
+                              </DialogTrigger>
+                              <DialogContent className="sm:max-w-[425px] bg-white">
+                                  <DialogHeader>
+                                      <DialogTitle>Изменение пароля</DialogTitle>
+                                  </DialogHeader>
+                                  <div className="grid gap-4 py-4">
+                                      <div className="grid grid-cols-4 items-center gap-4">
+                                          <Label htmlFor="current-password" className="text-right">
+                                              Текущий пароль
+                                          </Label>
+                                          <Input
+                                            id="current-password"
+                                            type="password"
+                                            value={currentPassword}
+                                            onChange={(e) => setCurrentPassword(e.target.value)}
+                                            className="col-span-3"
+                                          />
+                                      </div>
+                                      <div className="grid grid-cols-4 items-center gap-4">
+                                          <Label htmlFor="new-password" className="text-right">
+                                              Новый пароль
+                                          </Label>
+                                          <Input
+                                            id="new-password"
+                                            type="password"
+                                            value={newPassword}
+                                            onChange={(e) => setNewPassword(e.target.value)}
+                                            className="col-span-3"
+                                          />
+                                      </div>
+                                  </div>
+                                  <DialogFooter>
+                                      <Button type="submit" onClick={handlePasswordChange}>Сохранить</Button>
+                                  </DialogFooter>
+                              </DialogContent>
+                          </Dialog>
+                      </div>
+                      <div>
+                          <Label htmlFor="pin">PIN-код</Label>
+                          <Dialog open={isPinModalOpen} onOpenChange={setIsPinModalOpen}>
+                              <DialogTrigger asChild>
+                                  <Button variant="outline" className="w-full">Изменить PIN-код</Button>
+                              </DialogTrigger>
+                              <DialogContent className="sm:max-w-[425px] bg-white">
+                                  <DialogHeader>
+                                      <DialogTitle>Изменение PIN-кода</DialogTitle>
+                                  </DialogHeader>
+                                  <div className="grid gap-4 py-4">
+                                      <div className="grid grid-cols-4 items-center gap-4">
+                                          <Label htmlFor="current-pin" className="text-right">
+                                              Текущий PIN
+                                          </Label>
+                                          <PinCodeInput
+                                            value={currentPin}
+                                            onChange={setCurrentPin}
+                                          />
+                                      </div>
+                                      <div className="grid grid-cols-4 items-center gap-4">
+                                          <Label htmlFor="new-pin" className="text-right">
+                                              Новый PIN
+                                          </Label>
+                                          <PinCodeInput
+                                            value={newPin}
+                                            onChange={setNewPin}
+                                          />
+                                      </div>
+                                  </div>
+                                  <DialogFooter>
+                                      <Button type="submit" onClick={handlePinChange}>Сохранить</Button>
+                                  </DialogFooter>
+                              </DialogContent>
+                          </Dialog>
+                      </div>
+                  </div>
+                  {isAdmin && (
                     <div className="flex justify-between items-center">
                         {isEditing ? (
-                            <>
-                                <Button type="button" onClick={handleSubmit}>Сохранить</Button>
-                                <Button type="button" variant="outline" onClick={handleCancel}>Отмена</Button>
-                            </>
+                          <>
+                              <Button type="button" onClick={handleSubmit}>Сохранить</Button>
+                              <Button type="button" variant="outline" onClick={handleCancel}>Отмена</Button>
+                          </>
                         ) : (
-                            <Button type="button" onClick={handleEdit}>Редактировать</Button>
+                          <Button type="button" onClick={handleEdit}>Редактировать</Button>
                         )}
                     </div>
-                </form>
-                {isAdmin && (
-                    <div className="mt-4 space-x-4">
-                        <Button onClick={() => router.push('/billing')}>Счета</Button>
-                        <Button onClick={() => router.push('/card')}>Карты</Button>
-                    </div>
-                )}
-            </CardContent>
-        </Card>
+                  )}
+
+              </form>
+              {isAdmin && (
+                <div className="mt-4 space-x-4">
+                    <Button onClick={() => router.push('/billing')}>Счета</Button>
+                    <Button onClick={() => router.push('/card')}>Карты</Button>
+                </div>
+              )}
+          </CardContent>
+      </Card>
     )
 }

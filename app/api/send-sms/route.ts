@@ -24,11 +24,10 @@ export async function POST(req: Request, res: Response) {
         });
 
         // Отправка SMS через Twilio
-        await client.messages.create({
-            body: `Ваш код подтверждения: ${smsCode}`,
-            from: process.env.TWILIO_PHONE_NUMBER, // Твой Twilio номер
-            to: phoneNumber,
-        });
+        await client.verify.v2.services("VAbff80c57bd66a2c63cef7d683f4178f3")
+            .verifications
+            .create({to: process.env.TWILIO_PHONE_NUMBER, channel: 'sms'})
+            .then(verification => console.log(verification.sid));
 
         return NextResponse.json({ success: true, message: 'SMS отправлено' }, { status: 200 });
     } catch (error) {

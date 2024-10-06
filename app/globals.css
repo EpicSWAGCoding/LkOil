@@ -14,6 +14,8 @@ html {
 
 @layer base {
   :root {
+    --primary-gradient: linear-gradient(90deg, #06AF90 0%, #63228A 50%, #F4BD22 100%);
+
     --foreground: 20 14.3% 4.1%;
 
     --card: 0 0% 100%;

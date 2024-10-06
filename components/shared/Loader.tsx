@@ -1,12 +1,12 @@
-import { Loader2 } from "lucide-react"
+import { Ring } from '@uiball/loaders';
 
 export const Loader = () => {
-    return (
-        <div className="flex items-center justify-center h-64">
-            <div className="relative">
-                <Loader2 className="w-12 h-12 text-primary animate-spin" />
-                <div className="absolute inset-0 w-12 h-12 border-4 border-t-4 border-primary rounded-full animate-pulse"></div>
-            </div>
-        </div>
-    )
-}
+  return (
+    <div className="flex flex-col items-center justify-center h-64 space-y-4">
+      <div className="relative">
+        <Ring size={40} lineWeight={5} speed={2} color="#110283" />
+      </div>
+      <p className="text-primary text-lg animate-pulse">Загрузка...</p>
+    </div>
+  );
+};

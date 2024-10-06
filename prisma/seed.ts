@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt';
 import { prisma } from './prisma-client';
-import { Prisma } from '@prisma/client';
 
 async function down() {
     // Очищаем таблицы в правильном порядке, учитывая зависимости
@@ -176,7 +175,7 @@ async function up() {
                 contractorId: contractor1.id,
                 accountNumber: account1.accountNumber,
                 cardId: card1.id,
-                transactionDate: new Date('2024-03-15'),
+                transactionDate: new Date('2024-10-01'),
                 gasStation: 'АЗС «Газпромнефть», Москва, Каширское шоссе',
                 product: 'Бензин АИ-95',
                 quantity: 60.0,
@@ -189,7 +188,7 @@ async function up() {
                 contractorId: contractor2.id,
                 accountNumber: account2.accountNumber,
                 cardId: card2.id,
-                transactionDate: new Date('2024-04-20'),
+                transactionDate: new Date('2024-10-02'),
                 gasStation: 'АЗС «Татнефть», Казань, Проспект Победы',
                 product: 'Дизель',
                 quantity: 40.0,

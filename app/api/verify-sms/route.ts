@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/prisma/prisma-client';
+import {encrypt} from "@/lib/encryption";
+import {sign} from "jsonwebtoken";
 
 // POST запрос для проверки SMS-кода
 export async function POST(req: Request) {
