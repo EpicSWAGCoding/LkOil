@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛢️ LkOil — Личный Кабинет для АЗС/Топливной компании
 
-## Getting Started
+> Современное веб-приложение, разработанное с нуля в одиночку. Реализовано на основе архитектуры Feature-Sliced Design с использованием React, TypeScript и актуального UI-стека.
 
-First, run the development server:
+## 🔍 Описание
+
+LkOil — это интерфейс личного кабинета, предназначенного для клиентов сети автозаправок. Проект включает в себя адаптивные страницы с возможностями:
+- Просмотра информации о счёте
+- Управления транспортными средствами
+- Анализа операций и транзакций
+- Загрузки/выгрузки данных
+
+### 🎯 Цель проекта
+Создание прототипа B2B-решения, демонстрирующего навыки:
+- Архитектурного мышления
+- Реализации сложных интерфейсов
+- Работа с UI-состояниями и TypeScript
+
+---
+
+## 🧠 Стек технологий
+
+| Категория      | Технологии                           |
+|----------------|--------------------------------------|
+| Языки          | TypeScript, JavaScript               |
+| Фреймворк      | React                                |
+| Архитектура    | Feature-Sliced Design (FSD)          |
+| Стилизация     | SCSS, BEM                            |
+| Навигация      | React Router DOM                     |
+| UI-компоненты  | Собственные компоненты               |
+| Сборка         | Vite                                 |
+| Хранение данных| Моковые данные (JSON/стейт)          |
+
+---
+
+## 📸 Скриншоты
+
+<img src="https://github.com/EpicSWAGCoding/LkOil/blob/main/public/lkoil.png" alt="Dashboard" width="600"/>
+
+---
+
+## ⚙️ Установка и запуск
 
 ```bash
+# 1. Клонируй репозиторий
+git clone https://github.com/EpicSWAGCoding/LkOil.git
+
+# 2. Установи зависимости
+cd LkOil
+npm install
+
+# 3. Запусти проект
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+````
+
+---
+
+## 🧩 Структура проекта
+
+```
+src/
+│
+├── app/               # App-level инициализация
+├── pages/             # Отдельные страницы (FSD)
+├── widgets/           # Виджеты страницы
+├── features/          # Бизнес-логика (FSD)
+├── entities/          # Модели, данные, сущности
+├── shared/            # Компоненты, утилиты, типы
+└── styles/            # SCSS-файлы, переменные, базовая стилизация
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧑‍💻 Автор
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* [Егор Егоров](https://github.com/EpicSWAGCoding)
+* Открыт к предложениям: [Telegram](https://t.me/ZOLOTO395)
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📌 Планы на будущее
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* 🔒 Авторизация и роли пользователей
+* 📊 Интерактивная аналитика
+* 🌐 API-интеграция с базой данных
+* 🧪 Покрытие unit-тестами
